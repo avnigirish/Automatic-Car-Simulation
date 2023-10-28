@@ -1,24 +1,24 @@
 const carCanvas=document.getElementById("carCanvas");
-carCanvas.width=200;
+carCanvas.width=300;
 const networkCanvas=document.getElementById("networkCanvas");
-networkCanvas.width=300;
+networkCanvas.width=700;
 
 const carCtx = carCanvas.getContext("2d");
 const networkCtx = networkCanvas.getContext("2d");
 
 const road=new Road(carCanvas.width/2,carCanvas.width*0.9);
 
-const N=1;
+const N=200; //play around with number for training data to simulate best car
 const cars=generateCars(N);
 let bestCar=cars[0];
 if(localStorage.getItem("bestBrain")){
-    //for(let i=0;i<cars.length;i++){
-        bestCar.brain=JSON.parse(
+    for(let i=0;i<cars.length;i++){
+        cars[i].brain=JSON.parse(
             localStorage.getItem("bestBrain"));
-        // if(i!=0){
-        //     NeuralNetwork.mutate(cars[i].brain,0.1);
-        // }
-    //}
+        if(i!=0){
+            NeuralNetwork.mutate(cars[i].brain,0.5);
+        }
+    }
 }
 
 const traffic=[
